@@ -1,14 +1,14 @@
-import os
 import requests
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-# Initialize user credits (in-memory dictionary for simplicity)
-user_credits = {}
-
-# Clothoff API setup
+# Bot token and API credentials
+BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
 API_URL = "https://api.clothoff.com/face_swap"  # Replace with the correct endpoint
 API_HEADERS = {"Authorization": "Bearer YOUR_API_TOKEN"}
+
+# Initialize user credits (using a dictionary for simplicity)
+user_credits = {}
 
 # Log group ID and admin ID for private refilling and logging
 LOG_GROUP_ID = -1001234567890  # Replace with your log group ID
@@ -116,7 +116,7 @@ async def faceswap_video(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # Main function to start the bot
 if __name__ == "__main__":
-    application = ApplicationBuilder().token("YOUR_TELEGRAM_BOT_TOKEN").build()
+    application = ApplicationBuilder().token(BOT_TOKEN).build()
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("refill", refill))
