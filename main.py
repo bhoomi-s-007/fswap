@@ -1,6 +1,6 @@
 import requests
 from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+from telegram.ext import ApplicationBuilder, CommandHandler
 
 # Bot token and API credentials
 BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
@@ -15,7 +15,7 @@ LOG_GROUP_ID = -1001234567890
 ADMIN_ID = 123456789
 
 # Start function to show credits and user ID
-def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+def start(update, context):
     user_id = update.effective_user.id
     user_credits.setdefault(user_id, 0)
     update.message.reply_text(
@@ -23,7 +23,7 @@ def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 # Refill credits (admin-only command)
-def refill(update: Update, context: ContextTypes.DEFAULT_TYPE):
+def refill(update, context):
     if update.effective_user.id != ADMIN_ID:
         update.message.reply_text("Only the admin can add credits.")
         return
@@ -45,7 +45,7 @@ def refill(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update.message.reply_text("Please provide a valid user_id and amount.")
 
 # Function for face swap image requests
-def faceswap_image(update: Update, context: ContextTypes.DEFAULT_TYPE):
+def faceswap_image(update, context):
     user_id = update.effective_user.id
     if user_credits.get(user_id, 0) < 1:
         update.message.reply_text("Insufficient credits. Contact admin to refill.")
@@ -77,7 +77,7 @@ def faceswap_image(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update.message.reply_text("Face swap failed. Please try again later.")
 
 # Function for face swap video requests
-def faceswap_video(update: Update, context: ContextTypes.DEFAULT_TYPE):
+def faceswap_video(update, context):
     user_id = update.effective_user.id
     if user_credits.get(user_id, 0) < 2:
         update.message.reply_text("Insufficient credits. Contact admin to refill.")
